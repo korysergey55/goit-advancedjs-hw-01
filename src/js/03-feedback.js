@@ -1,3 +1,5 @@
+import throttle from 'lodash.throttle';
+
 const formRef = document.querySelector('.feedback-form')
 const LS_KEY = "feedback-form-state"
 let LS_FORM_VALUE = {}
@@ -16,10 +18,10 @@ formRef.addEventListener('change', (evt) => {
     email: email.value,
     message: message.value
   }
-  // _.throttle(() => {
-  //   localStorage.setItem(LS_KEY, JSON.stringify(LS_FORM_VALUE))
-  // }, 500)
-  localStorage.setItem(LS_KEY, JSON.stringify(LS_FORM_VALUE))
+  // localStorage.setItem(LS_KEY, JSON.stringify(LS_FORM_VALUE))
+  throttle(() => {
+    localStorage.setItem(LS_KEY, JSON.stringify(LS_FORM_VALUE))
+  }, 500)
 })
 
 formRef.addEventListener('submit', (evt) => {

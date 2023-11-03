@@ -1,4 +1,5 @@
 import Player from '@vimeo/player';
+import throttle from 'lodash.throttle';
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
@@ -12,8 +13,8 @@ if (timePl) {
 }
 
 player.on('timeupdate', function (data) {
-  localStorage.setItem(LS_KEY, JSON.stringify(data))
-  //  _.throttle(() => {
-  //    localStorage.setItem(LS_KEY, JSON.stringify(data))
-  // }, 500)
+  // localStorage.setItem(LS_KEY, JSON.stringify(data))
+  throttle(() => {
+    localStorage.setItem(LS_KEY, JSON.stringify(data))
+  }, 500)
 });
