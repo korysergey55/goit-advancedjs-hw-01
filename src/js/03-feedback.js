@@ -11,18 +11,21 @@ if (storageValue) {
   formRef.message.value = storageValue.message
 }
 
-formRef.addEventListener('change', (evt) => {
-  const { email, message } = evt.currentTarget.elements
+formRef.addEventListener('change', throttle((evt) => {
+  // const { email, message } = evt.currentTarget.elements
+  // LS_FORM_VALUE = {
+  //   email: email.value,
+  //   message: message.value
+  // }
 
-  LS_FORM_VALUE = {
-    email: email.value,
-    message: message.value
-  }
-  // localStorage.setItem(LS_KEY, JSON.stringify(LS_FORM_VALUE))
-  throttle(() => {
-    localStorage.setItem(LS_KEY, JSON.stringify(LS_FORM_VALUE))
-  }, 500)
-})
+  const formData = new FormData(evt.currentTarget)
+  formData.forEach((value, key) => {
+    LS_FORM_VALUE[key] = value
+  })
+
+  localStorage.setItem(LS_KEY, JSON.stringify(LS_FORM_VALUE))
+
+}), 500)
 
 formRef.addEventListener('submit', (evt) => {
   evt.preventDefault()

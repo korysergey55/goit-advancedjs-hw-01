@@ -12,9 +12,6 @@ if (timePl) {
   player.setCurrentTime(seconds)
 }
 
-player.on('timeupdate', function (data) {
-  // localStorage.setItem(LS_KEY, JSON.stringify(data))
-  throttle(() => {
-    localStorage.setItem(LS_KEY, JSON.stringify(data))
-  }, 500)
-});
+player.on('timeupdate', throttle(function (data) {
+  localStorage.setItem(LS_KEY, JSON.stringify(data))
+}), 1000);
