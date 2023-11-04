@@ -11,7 +11,7 @@ if (storageValue) {
   formRef.message.value = storageValue.message
 }
 
-formRef.addEventListener('change', throttle((evt) => {
+formRef.addEventListener('input', throttle((evt) => {
   // const { email, message } = evt.currentTarget.elements
   // LS_FORM_VALUE = {
   //   email: email.value,
@@ -29,6 +29,11 @@ formRef.addEventListener('change', throttle((evt) => {
 
 formRef.addEventListener('submit', (evt) => {
   evt.preventDefault()
+  if (!formRef.email.value || !formRef.message.value) {
+    alert('Please fill out all fields')
+    return
+  }
+  console.log(LS_FORM_VALUE)
   localStorage.removeItem(LS_KEY)
   formRef.reset()
 })
